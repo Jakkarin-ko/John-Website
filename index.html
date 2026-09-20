@@ -2,235 +2,405 @@
 <html lang="en">
 
 <head>
+
     <!-- =====================================================
          BASIC INFORMATION
          ===================================================== -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Personal Website</title>
 
+
     <!-- =====================================================
-         GOOGLE FONTS (Level 1: Typography)
+         GOOGLE FONTS & ICONS
+         Importing 'Fredoka' font family and Google Material Icons
          ===================================================== -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 
     <!-- =====================================================
-         CSS STYLES
+         PRO CSS STYLES
          ===================================================== -->
+
     <style>
-        /* -------------------------------
-           General Page (Level 1: Colors & Fonts)
-           ------------------------------- */
-        body {
-            font-family: 'Fredoka', sans-serif;
-            background-color: #f4f8fb;
-            margin: 0;
-            padding: 0;
-            color: #222;
-        }
 
         /* -------------------------------
-           Header
+           [PRO STEP 1] CSS Variables
+           Centralized color palette for easy theme tweaking
+           ------------------------------- */
+        :root {
+            --primary: #007c91;
+            --primary-dark: #005966;
+            --primary-light: #e0f2f1;
+            --accent: #ff6b6b;
+            --bg-body: #f0f4f8;
+            --bg-card: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --nav-bg: rgba(0, 63, 74, 0.92);
+            --radius-lg: 20px;
+            --radius-sm: 10px;
+            --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --shadow-hover: 0 20px 30px -10px rgba(0, 124, 145, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+
+        /* -------------------------------
+           [PRO STEP 2] Reset & Base Styles
+           Smooth scrolling and box-sizing reset
+           ------------------------------- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--bg-body);
+            background-image: radial-gradient(#dbeafe 1px, transparent 1px);
+            background-size: 24px 24px;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+
+        /* -------------------------------
+           [PRO STEP 3] Hero Header
+           Gradient background with animated title feel
            ------------------------------- */
         header {
-            background-color: #007c91;
+            background: linear-gradient(135deg, #007c91 0%, #004d40 100%);
             color: white;
             text-align: center;
-            padding: 50px 20px;
-            border-bottom: 5px solid #005966;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: var(--bg-body);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
         }
 
         header h1 {
             margin: 0;
-            font-size: 42px;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
 
         header p {
-            font-size: 18px;
+            font-size: 1.25rem;
             margin-top: 10px;
             opacity: 0.9;
+            font-weight: 400;
         }
 
+
         /* -------------------------------
-           Navigation (Level 3: Interactivity)
+           [PRO STEP 4] Sticky Nav with Glassmorphism
+           Stays visible on scroll with blurred backdrop
            ------------------------------- */
         nav {
-            background-color: #003f4a;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             text-align: center;
-            padding: 15px;
+            padding: 12px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            margin: 0 8px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 8px 18px;
+            border-radius: 30px;
+            transition: var(--transition);
+            position: relative;
         }
 
         nav a:hover {
-            background-color: white;
-            color: #003f4a;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
+        nav a:active {
+            transform: translateY(0);
+        }
+
+
         /* -------------------------------
-           Main Layout
+           [PRO STEP 5] Main Layout
            ------------------------------- */
         main {
-            max-width: 800px;
-            margin: 40px auto;
+            max-width: 860px;
+            margin: 20px auto 40px auto;
             padding: 0 20px;
         }
 
+
         /* -------------------------------
-           Sections (Level 2: Box Model & Card Magic)
+           [PRO STEP 6] Card Component
+           Polished card style with subtle left accent line
            ------------------------------- */
         section {
-            background-color: white;
-            padding: 30px;
+            background-color: var(--bg-card);
+            padding: 35px;
             margin-bottom: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-            border-left: 6px solid #007c91;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            border-left: 6px solid var(--primary);
+            transition: var(--transition);
+            position: relative;
         }
 
-        /* Section Hover Effect */
         section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
         }
 
         section h2 {
-            color: #007c91;
+            color: var(--primary);
             margin-top: 0;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         section h3 {
-            color: #444;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 12px;
         }
 
+
         /* -------------------------------
-           Profile Image (Level 2: Custom Borders)
+           [PRO STEP 7] Profile Avatar
+           Interactive circular profile with ring animation
            ------------------------------- */
         .profile-image {
             display: block;
-            width: 220px;
-            height: 220px;
+            width: 180px;
+            height: 180px;
             object-fit: cover;
             margin: 25px auto;
             border-radius: 50%;
-            border: 5px solid white;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
+            border: 4px solid var(--bg-card);
+            outline: 4px solid var(--primary);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            transition: var(--transition);
         }
 
         .profile-image:hover {
-            transform: scale(1.05) rotate(3deg);
+            transform: scale(1.06) rotate(2deg);
+            outline-color: var(--accent);
         }
 
+
         /* -------------------------------
-           Lists (Level 2: Styled Badges)
+           [PRO STEP 8] Modern Custom Lists
+           Replaces default bullets with elegant pill cards
            ------------------------------- */
-        ul, ol {
-            line-height: 1.8;
-            padding-left: 0;
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
         }
 
         ul li {
-            background-color: #f8fafc;
-            margin: 8px 0;
-            padding: 10px 15px;
-            border-radius: 8px;
-            list-style-type: none;
-            border-left: 3px solid #007c91;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-right: 10px;
+            line-height: 0;
+        }
+
+        ul li:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        ul li:hover::before {
+            color: white;
+        }
+
+        /* Numbered Lists Styling */
+        ol {
+            padding-left: 20px;
+            margin: 0;
         }
 
         ol li {
-            padding-left: 5px;
+            padding: 8px 0;
+            font-weight: 500;
+            color: var(--text-main);
         }
 
+        ol li::marker {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+
         /* -------------------------------
-           Links & Buttons (Level 3: Micro-Interactions)
+           [PRO STEP 9] Interactive Link Buttons
+           Modern pill button with press animation
            ------------------------------- */
         .website-link {
-            display: inline-block;
-            background-color: #007c91;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 12px 24px;
-            border-radius: 25px;
+            padding: 14px 28px;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 124, 145, 0.3);
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(0, 124, 145, 0.35);
+            transition: var(--transition);
+            margin-top: 10px;
         }
 
         .website-link:hover {
-            background-color: #005966;
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 6px 15px rgba(0, 124, 145, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 124, 145, 0.45);
+        }
+
+        .website-link:active {
+            transform: translateY(-1px);
         }
 
         /* Contact links */
         section ul li a {
-            color: #007c91;
+            color: inherit;
             text-decoration: none;
-            font-weight: bold;
+            width: 100%;
         }
 
-        section ul li a:hover {
-            text-decoration: underline;
-        }
 
         /* -------------------------------
-           Footer
+           [PRO STEP 10] Footer
            ------------------------------- */
         footer {
-            background-color: #003f4a;
-            color: white;
+            background-color: #002b33;
+            color: #a0aec0;
             text-align: center;
-            padding: 25px;
-            margin-top: 50px;
+            padding: 40px 20px;
+            margin-top: 60px;
+            font-size: 0.95rem;
         }
 
         footer p {
-            margin: 5px 0;
+            margin: 6px 0;
         }
+
+        footer p:first-child {
+            color: white;
+            font-weight: 600;
+        }
+
     </style>
+
 </head>
 
+
 <body>
+
 
     <!-- =====================================================
          HEADER
          ===================================================== -->
+
     <header>
+
         <h1>My Personal Website</h1>
+
         <p>Welcome to my website!</p>
+
     </header>
+
+
 
     <!-- =====================================================
          NAVIGATION
          ===================================================== -->
+
     <nav>
+
         <a href="#about">About Me</a>
+
         <a href="#hobbies">Hobbies</a>
+
         <a href="#favorites">Favorites</a>
+
         <a href="#dream">My Dream</a>
+
     </nav>
+
+
 
     <!-- =====================================================
          MAIN CONTENT
          ===================================================== -->
+
     <main>
 
-        <!-- SECTION 1 : ABOUT ME -->
+
+        <!-- =================================================
+             SECTION 1 : ABOUT ME
+             ================================================= -->
+
         <section id="about">
+
             <h2>About Me</h2>
+
             <p>
                 Hello! My name is Dylan.
                 I am a Grade 6 student.
@@ -238,123 +408,266 @@
                 and exploring technology.
             </p>
 
-            <img class="profile-image" 
-                 src="https://i.ytimg.com/vi/0eYG1ogJpIQ/maxresdefault.jpg" 
-                 alt="A beautiful landscape">
+
+            <!-- Image -->
+
+            <img
+                class="profile-image"
+                src="https://i.ytimg.com/vi/0eYG1ogJpIQ/maxresdefault.jpg"
+                alt="A beautiful landscape">
+
 
             <h3>My Information</h3>
+
+
             <ul>
+
                 <li>Age: 12 years old</li>
+
                 <li>Grade: 6</li>
+
                 <li>School: John School</li>
+
                 <li>Favorite Subject: Computer Science</li>
+
             </ul>
+
         </section>
 
-        <!-- SECTION 2 : HOBBIES -->
+
+
+        <!-- =================================================
+             SECTION 2 : HOBBIES
+             ================================================= -->
+
         <section id="hobbies">
+
             <h2>My Hobbies</h2>
+
             <p>
                 These are some activities that
                 I enjoy doing in my free time.
             </p>
 
+
             <ul>
+
                 <li>Playing video games</li>
+
                 <li>Listening to music</li>
+
                 <li>Drawing</li>
+
                 <li>Playing football</li>
+
                 <li>Programming</li>
+
             </ul>
 
+
             <h3>My Favorite Activity</h3>
+
             <p>
                 My favorite activity is programming
                 because I enjoy creating things
                 with code.
             </p>
+
         </section>
 
-        <!-- SECTION 3 : FAVORITE THINGS -->
+
+
+        <!-- =================================================
+             SECTION 3 : FAVORITE THINGS
+             ================================================= -->
+
         <section id="favorites">
+
             <h2>My Favorite Things</h2>
 
+
             <h3>Favorite Foods</h3>
+
             <ul>
+
                 <li>Beef Steak</li>
+
                 <li>Fried Chicken</li>
+
                 <li>Sashimi</li>
+
             </ul>
+
 
             <h3>Favorite Games</h3>
+
             <ol>
+
                 <li>Minecraft</li>
+
                 <li>Roblox</li>
+
                 <li>Geometry Dash</li>
+
             </ol>
 
+
             <h3>Favorite Movies</h3>
+
             <ul>
+
                 <li>John Movie</li>
+
                 <li>John Movie II</li>
+
                 <li>John Movie Finale</li>
+
             </ul>
+
         </section>
 
-        <!-- SECTION 4 : FAVORITE WEBSITE -->
+
+
+        <!-- =================================================
+             SECTION 4 : FAVORITE WEBSITE
+             ================================================= -->
+
         <section>
+
             <h2>My Favorite Website</h2>
+
             <p>
                 I like using websites to learn
                 new things and find interesting information.
             </p>
 
-            <a class="website-link" 
-               href="https://www.youtube.com" 
-               target="_blank">
+
+            <a
+                class="website-link"
+                href="https://www.youtube.com"
+                target="_blank">
+
                 Visit YouTube
+
             </a>
+
         </section>
 
-        <!-- SECTION 5 : MY DREAM -->
+
+
+        <!-- =================================================
+             SECTION 5 : MY DREAM
+             ================================================= -->
+
         <section id="dream">
+
             <h2>My Dream</h2>
+
             <p>
                 In the future, I want to become
                 a person who creates useful technology
                 and helps other people.
             </p>
 
+
             <h3>My Goals</h3>
+
+
             <ol>
+
                 <li>Learn programming</li>
+
                 <li>Create my own website</li>
+
                 <li>Build an interesting project</li>
+
                 <li>Learn about Artificial Intelligence</li>
+
             </ol>
+
         </section>
 
-        <!-- SECTION 6 : CONTACT -->
+
+
+        <!-- =================================================
+             SECTION 6 : CONTACT
+             ================================================= -->
+
         <section>
+
             <h2>Contact Me</h2>
-            <p>You can find me on these websites.</p>
+
+            <p>
+                You can find me on these websites.
+            </p>
+
 
             <ul>
-                <li><a href="https://github.com" target="_blank">GitHub</a></li>
-                <li><a href="https://www.youtube.com" target="_blank">YouTube</a></li>
-                <li><a href="https://www.wikipedia.org" target="_blank">Wikipedia</a></li>
+
+                <li>
+
+                    <a
+                        href="https://github.com"
+                        target="_blank">
+
+                        GitHub
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="https://www.youtube.com"
+                        target="_blank">
+
+                        YouTube
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        href="https://www.wikipedia.org"
+                        target="_blank">
+
+                        Wikipedia
+
+                    </a>
+
+                </li>
+
             </ul>
+
         </section>
 
+
     </main>
+
+
 
     <!-- =====================================================
          FOOTER
          ===================================================== -->
+
     <footer>
-        <p>Created by Dylan</p>
-        <p>© 2026 My Personal Website</p>
+
+        <p>
+            Created by Dylan
+        </p>
+
+        <p>
+            © 2026 My Personal Website
+        </p>
+
     </footer>
 
+
 </body>
+
 </html>
